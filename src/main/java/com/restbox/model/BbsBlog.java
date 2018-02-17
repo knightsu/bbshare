@@ -1,7 +1,150 @@
 package com.restbox.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 
-@Document
+@Entity
+@Table(name = "blogs")
 public class BbsBlog {
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "blog_id", nullable = false, unique = true) @NotNull private Long id;
+
+    private String username;
+    private String category;
+
+    @Size(max=100) private String title;
+    private String serviceType;
+    private String itemType;
+    @Size(max=250) private String description;
+    private String docType;
+    private String status;
+    private int charge;
+    private Date createDate;
+    private Date startDate;
+    private Date endDate;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsblog")
+    private Collection<Comment> comments = new HashSet<Comment>();
+
+    public BbsBlog(String username, String category, String title, String serviceType, String itemType, String description, String docType, String status, int charge, Date createDate, Date startDate, Date endDate) {
+        this.username = username;
+        this.category = category;
+        this.title = title;
+        this.serviceType = serviceType;
+        this.itemType = itemType;
+        this.description = description;
+        this.docType = docType;
+        this.status = status;
+        this.charge = charge;
+        this.createDate = createDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 }
