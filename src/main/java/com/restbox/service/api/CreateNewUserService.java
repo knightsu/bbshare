@@ -2,6 +2,6 @@ package com.restbox.service.api;
 
 import com.restbox.model.BbsUser;
 
-public interface CreateNewUser {
+public interface CreateNewUserService {
     BbsUser createUser(String userData);
 }

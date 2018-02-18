@@ -25,6 +25,9 @@ public class BbsBlog {
     @Column(name = "create_date") private Date createDate;
     @Column(name = "start_date") private Date startDate;
     @Column(name = "end_date") private Date endDate;
+    private String zipcode;
+
+
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsblog")
     private Collection<Comment> comments = new HashSet<Comment>();
@@ -42,6 +45,14 @@ public class BbsBlog {
         this.createDate = createDate;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     public Collection<Comment> getComments() {

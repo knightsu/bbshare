@@ -14,6 +14,8 @@ public enum Category implements Serializable{
     BOOK("book"),
     DVD("dvd"),
     GAME("game account"),
+    MEDIA("media"),
+    RIDE("ride"),
     DECOR("decoration"),
     OTHER("other");
 
