@@ -16,15 +16,15 @@ public class BbsBlog {
     private String category;
 
     @Size(max=100) private String title;
-    private String serviceType;
-    private String itemType;
+    @Column(name = "service_type") private String serviceType;
+    @Column(name = "item_type") private String itemType;
     @Size(max=250) private String description;
-    private String docType;
-    private String status;
+    @Column(name = "doc_type") private String docType;
+    @Column(name = "status_curr") private String status;
     private int charge;
-    private Date createDate;
-    private Date startDate;
-    private Date endDate;
+    @Column(name = "create_date") private Date createDate;
+    @Column(name = "start_date") private Date startDate;
+    @Column(name = "end_date") private Date endDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsblog")
     private Collection<Comment> comments = new HashSet<Comment>();
@@ -42,6 +42,14 @@ public class BbsBlog {
         this.createDate = createDate;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Collection<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {
