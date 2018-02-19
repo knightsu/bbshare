@@ -3,6 +3,7 @@ package com.restbox.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Document
 public class BbsUser {
@@ -15,6 +16,15 @@ public class BbsUser {
     private String phone;
     private long coins;
     private String zipcode;
+    private Date registerDate;
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
 
     public String getZipcode() {
         return zipcode;
