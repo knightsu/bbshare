@@ -18,15 +18,8 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
     private BbsUser bbsUser;
     @Override
-    public BbsUser createUser(String userData) {
-        try {
-            bbsUser = objectMapper.convertValue(objectMapper.readValue(userData, Map.class), BbsUser.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        mongoRepository.save(bbsUser);
-
+    public BbsUser createUser(BbsUser userData) {
+        mongoRepository.save(userData);
         return bbsUser;
     }
 }

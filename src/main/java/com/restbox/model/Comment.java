@@ -14,7 +14,7 @@ public class Comment {
 
     private String username;
 
-    @Size @NotNull private String content;
+    @Size(max=255) @NotNull private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id", nullable = false)

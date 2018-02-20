@@ -6,5 +6,5 @@ import java.util.Collection;
 
 public interface CreateBlogService {
 
-    Collection<BbsBlog> postBlog(BbsBlog bbsBlog);
+    Collection<BbsBlog> postBlog(BbsBlog bbsBlog, String username);
 }

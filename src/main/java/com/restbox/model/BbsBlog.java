@@ -3,9 +3,7 @@ package com.restbox.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity
 @Table(name = "blogs")
@@ -29,8 +27,8 @@ public class BbsBlog {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsblog")
-    private Collection<Comment> comments = new HashSet<Comment>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsBlog")
+    private Collection<Comment> comments = new LinkedHashSet<Comment>();
 
     public BbsBlog(String username, String category, String title, String serviceType, String itemType, String description, String docType, String status, int charge, Date createDate, Date startDate, Date endDate) {
         this.username = username;
