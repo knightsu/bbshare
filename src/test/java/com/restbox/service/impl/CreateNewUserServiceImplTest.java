@@ -27,7 +27,7 @@ public class CreateNewUserServiceImplTest {
         objectNode.put("phone", "3125139933");
         objectNode.put("zipcode", "60616");
         objectNode.put("coins", 450L);
-        objectNode.put("registerDate", new Timestamp(System.currentTimeMillis()).toString());
+    //    objectNode.put("registerDate", new Timestamp(System.currentTimeMillis()).toString());
 
         System.out.println(objectNode.toString());
 
