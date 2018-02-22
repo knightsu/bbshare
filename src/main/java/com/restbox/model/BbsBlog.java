@@ -30,6 +30,8 @@ public class BbsBlog {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bbsBlog")
     private Collection<Comment> comments = new LinkedHashSet<Comment>();
 
+    public BbsBlog() {}
+
     public BbsBlog(String username, String category, String title, String serviceType, String itemType, String description, String docType, String status, int charge, Date createDate, Date startDate, Date endDate) {
         this.username = username;
         this.category = category;

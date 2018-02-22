@@ -31,7 +31,7 @@ public class CreateNewUserServiceImplTest {
 
         System.out.println(objectNode.toString());
 
-        BbsUser bbsUser = createNewUserService.createUser(objectNode.toString());
+        BbsUser bbsUser = createNewUserService.createUser(objectNode);
 
         assertNotNull(bbsUser);
     }
