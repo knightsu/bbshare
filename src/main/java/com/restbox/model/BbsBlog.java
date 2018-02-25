@@ -21,9 +21,9 @@ public class BbsBlog {
     @Column(name = "doc_type") private String docType;
     @Column(name = "status_curr") private String status;
     private int charge;
-    @Column(name = "create_date") private Date createDate;
-    @Column(name = "start_date") private Date startDate;
-    @Column(name = "end_date") private Date endDate;
+    @Column(name = "create_date") private java.sql.Date createDate;
+    @Column(name = "start_date") private java.sql.Date startDate;
+    @Column(name = "end_date") private java.sql.Date endDate;
     private String zipcode;
 
 
