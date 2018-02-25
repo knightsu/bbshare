@@ -18,9 +18,8 @@ public class CalUtil {
             return sqldate;
         } catch (ParseException e) {
             e.printStackTrace();
-        } finally {
-            return null;
         }
+        return  null;
     }
 
     public static Date convertStringtoDate(String s)
@@ -33,8 +32,7 @@ public class CalUtil {
             return sqlDate;
         } catch (ParseException e) {
             e.printStackTrace();
-        } finally {
-            return null;
         }
+        return null;
     }
 }

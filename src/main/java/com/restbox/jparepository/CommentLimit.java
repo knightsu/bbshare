@@ -6,4 +6,5 @@ import java.util.Collection;
 
 public interface CommentLimit {
     Collection<Comment> findByBbsBlogIdAndPagenum(long blogId, int start);
+    int findTotalCommentsForeachBlog(long blogId);
 }

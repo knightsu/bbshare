@@ -10,7 +10,8 @@ public class FetchUserServiceImpl implements FetchUserService {
     }
 
     @Override
-    public void addPoint(BbsUser bbsUser) {
-
+    public BbsUser addPoint(BbsUser bbsUser) {
+        bbsUser.setCoins(bbsUser.getCoins()+1);
+        return bbsUser;
     }
 }

@@ -24,4 +24,9 @@ public class CommentRepositoryImpl implements CommentLimit {
 
         return result;
     }
+
+    @Override
+    public int findTotalCommentsForeachBlog(long blogId) {
+        return 0;
+    }
 }

@@ -90,4 +90,9 @@ public class BbsUser {
         this.coins = coins;
     }
 
+    @Override
+    public String toString() {
+        return "username :" + this.getUsername()+ " city: " + this.getCity() + " state: " + this.getState() + " address: " + this.getAddress() + " phone: " + this.getPhone()
+                + " coin: " + this.getCoins() + " zipcode: " + this.getZipcode() + " create: " + this.getRegisterDate().toString();
+    }
 }

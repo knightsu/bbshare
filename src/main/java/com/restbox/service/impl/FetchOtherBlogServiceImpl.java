@@ -1,11 +1,17 @@
 package com.restbox.service.impl;
 
+import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.FetchOtherBlogService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 
 public class FetchOtherBlogServiceImpl implements FetchOtherBlogService {
+
+    @Autowired
+    BbsBlogRepository bbsBlogRepository;
+
     @Override
     public Collection<BbsBlog> getAllBlogs(int page) {
         return null;

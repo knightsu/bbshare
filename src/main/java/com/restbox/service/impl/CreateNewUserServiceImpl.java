@@ -16,10 +16,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private BbsUser bbsUser;
     @Override
-    public BbsUser createUser(BbsUser userData) {
-        mongoRepository.save(userData);
+    public BbsUser createUser(BbsUser bbsUser) {
+        mongoRepository.save(bbsUser);
         return bbsUser;
     }
 }

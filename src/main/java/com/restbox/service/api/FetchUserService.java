@@ -4,5 +4,5 @@ import com.restbox.model.BbsUser;
 
 public interface FetchUserService {
     BbsUser getUser(String username);
-    void addPoint(BbsUser bbsUser);
+    BbsUser addPoint(BbsUser bbsUser);
 }

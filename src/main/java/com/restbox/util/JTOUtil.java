@@ -76,9 +76,9 @@ public class JTOUtil {
         {
             bbsUser.setPhone(userData.get("phone").asText());
         }
-        if(userData.get("coin").isValueNode())
+        if(userData.get("coins").isValueNode())
         {
-            bbsUser.setCoins(userData.get("coin").asLong());
+            bbsUser.setCoins(userData.get("coins").asLong());
         }
         if(userData.get("zipcode").isValueNode())
         {

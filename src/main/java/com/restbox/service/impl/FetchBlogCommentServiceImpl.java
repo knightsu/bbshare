@@ -20,8 +20,7 @@ public class FetchBlogCommentServiceImpl implements FetchBlogCommentService {
 
     @Override
     public Collection<Comment> getBlogDetails(long blogId, int page) {
-        int row = page*20+1;
-        return null;
+        return commentRepository.findByBbsBlogIdAndPagenum(blogId, page);
     }
 
     @Override
