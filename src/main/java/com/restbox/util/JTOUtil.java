@@ -3,6 +3,8 @@ package com.restbox.util;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.restbox.model.BbsBlog;
 
+import java.text.SimpleDateFormat;
+
 
 public class JTOUtil {
     public static BbsBlog convertToBlog(ObjectNode blogData)
@@ -48,6 +50,12 @@ public class JTOUtil {
         if(blogData.get("zipcode").isValueNode())
         {
             bbsBlog.setZipcode(blogData.get("zipcode").asText());
+        }
+        if(blogData.get("createdate").isValueNode())
+        {
+            String format = blogData.get("createdate").asText();
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
+
         }
 
         return bbsBlog;
