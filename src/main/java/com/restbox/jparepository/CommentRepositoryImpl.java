@@ -1,5 +1,6 @@
 package com.restbox.jparepository;
 
+import com.restbox.Constant.Constant;
 import com.restbox.model.Comment;
 
 import javax.persistence.EntityManager;
@@ -10,16 +11,16 @@ public class CommentRepositoryImpl implements CommentLimit {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public static final int PAGESIZE = 20;
+   // public static final int PAGESIZE = 20;
 
     @Override
     public Collection<Comment> findByBbsBlogIdAndPagenum(long blogId, int page) {
-        String sql = "SELECT c FROM Comment c WHERE c.BLOG_ID=  ?1 ORDER BY c.updateDate desc";
+        String sql = "SELECT c FROM Comment c WHERE c.blogId=  ?1 ORDER BY c.updateDate desc";
 
-        int firstResult = (page -1) * PAGESIZE;
+        int firstResult = (page -1) * Constant.COMMENT;
         Collection<Comment> result =  entityManager.createQuery(sql).setParameter(1, blogId)
                                         .setFirstResult(firstResult)
-                                        .setMaxResults(PAGESIZE)
+                                        .setMaxResults(Constant.COMMENT)
                                         .getResultList();
 
         return result;

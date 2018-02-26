@@ -17,7 +17,7 @@ public class Comment {
     @Size(max=255) @NotNull private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blog_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     private BbsBlog bbsBlog;
 
     private Date updateDate;
