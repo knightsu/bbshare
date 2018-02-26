@@ -17,7 +17,9 @@ public class CreateCommentServiceImpl implements CreateCommentService {
     @Override
     public BbsBlog postComment(String commentContent, long blogId, String username) {
         BbsBlog bbsBlog = bbsBlogRepository.findBbsBlogById(blogId);
-        Comment comment = new Comment(username,commentContent);
+        Comment comment = new Comment();
+        comment.setUsername(username);
+        comment.setContent(commentContent);
         comment.setBbsBlog(bbsBlog);
         bbsBlog.getComments().add(comment);
         commentRepository.save(comment);
