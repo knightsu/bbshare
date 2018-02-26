@@ -14,31 +14,31 @@ public class FetchOtherBlogServiceImpl implements FetchOtherBlogService {
 
     @Override
     public Collection<BbsBlog> getAllBlogs(int page) {
-        return null;
+        return bbsBlogRepository.fetchByFieldLimit(page);
     }
 
     @Override
     public Collection<BbsBlog> getByCategory(String category, int page) {
-        return null;
+        return bbsBlogRepository.fetchByFieldLimit("category", category, page);
     }
 
     @Override
     public Collection<BbsBlog> getByServiceType(String serviceType, int page) {
-        return null;
+        return bbsBlogRepository.fetchByFieldLimit("service", serviceType, page);
     }
 
     @Override
     public Collection<BbsBlog> getByItemType(String itemType, int page) {
-        return null;
+        return bbsBlogRepository.fetchByFieldLimit("item", itemType, page);
     }
 
     @Override
     public Collection<BbsBlog> getByDocType(String docType, int page) {
-        return null;
+        return bbsBlogRepository.fetchByFieldLimit("doc", docType, page);
     }
 
     @Override
-    public Collection<BbsBlog> getByStatus(String status) {
-        return null;
+    public Collection<BbsBlog> getByStatus(String status, int page) {
+        return bbsBlogRepository.fetchByFieldLimit("status", status, page);
     }
 }

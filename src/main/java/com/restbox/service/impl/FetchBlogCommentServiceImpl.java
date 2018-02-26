@@ -24,7 +24,11 @@ public class FetchBlogCommentServiceImpl implements FetchBlogCommentService {
     }
 
     @Override
-    public Collection<Comment> getByTime(Date start, Date end, int page) {
-        return null;
+    public Collection<Comment> getByTime(long blogId, Date start, Date end, int page) {
+
+        java.sql.Date sqlstart = new java.sql.Date(start.getTime());
+        java.sql.Date sqlend = new java.sql.Date(end.getTime());
+
+        return commentRepository.findByDatePeriodAndPage(blogId, sqlstart, sqlend, page);
     }
 }

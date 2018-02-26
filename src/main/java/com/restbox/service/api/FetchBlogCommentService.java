@@ -7,5 +7,5 @@ import java.util.Date;
 
 public interface FetchBlogCommentService {
     Collection<Comment> getBlogDetails(long blogId, int page);
-    Collection<Comment> getByTime(Date start, Date end, int page);
+    Collection<Comment> getByTime(long blogId, Date start, Date end, int page);
 }

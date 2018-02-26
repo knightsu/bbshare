@@ -11,6 +11,6 @@ public interface FetchOtherBlogService {
     Collection<BbsBlog> getByServiceType(String serviceType, int page);
     Collection<BbsBlog> getByItemType(String itemType, int page);
     Collection<BbsBlog> getByDocType(String docType, int page);
-    Collection<BbsBlog> getByStatus(String status);
+    Collection<BbsBlog> getByStatus(String status, int page);
 
 }

@@ -1,15 +1,20 @@
 package com.restbox.service.impl;
 
+import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.service.api.FetchTotalAmountBlogService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class FetchTotalAmountBlogServiceImpl implements FetchTotalAmountBlogService {
+    @Autowired
+    BbsBlogRepository bbsBlogRepository;
+
     @Override
-    public int fetchTotalAmountBlogByUsername(String username) {
-        return 0;
+    public long fetchTotalAmountBlogByUsername(String username) {
+        return bbsBlogRepository.findTotalBlogs(username);
     }
 
     @Override
-    public int fetchTotalAmountBlog() {
-        return 0;
+    public long fetchTotalAmountBlog() {
+        return bbsBlogRepository.findTotalBlogs();
     }
 }

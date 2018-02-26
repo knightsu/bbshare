@@ -13,7 +13,7 @@ public interface FetchUserBlogService {
     Collection<BbsBlog> getByServiceType(String username, String serviceType, int page);
     Collection<BbsBlog> getByItemType(String username, String itemType, int page);
     Collection<BbsBlog> getByDocType(String username, String docType, int page);
-    Collection<BbsBlog> getByStatus(String username, String status);
+    Collection<BbsBlog> getByStatus(String username, String status, int page);
 
 
 }
