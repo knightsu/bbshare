@@ -5,9 +5,11 @@ import com.restbox.model.BbsBlog;
 import com.restbox.service.api.CreateBlogService;
 import com.restbox.service.api.FetchUserBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class CreateBlogServiceImpl implements CreateBlogService {
 
     @Autowired

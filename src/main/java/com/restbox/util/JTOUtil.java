@@ -42,9 +42,9 @@ public class JTOUtil {
         if (blogData.get("zipcode").isValueNode()) {
             bbsBlog.setZipcode(blogData.get("zipcode").asText());
         }
-        if (blogData.get("create").isValueNode()) {
-            bbsBlog.setCreateDate(CalUtil.convertStringtoTime(blogData.get("create").asText()));
-        }
+//        if (blogData.get("create").isValueNode()) {
+//            bbsBlog.setCreateDate(CalUtil.convertStringtoTime(blogData.get("create").asText()));
+//        }
         if (blogData.get("start").isValueNode()) {
             bbsBlog.setStartDate(CalUtil.convertStringtoTime(blogData.get("start").asText()));
         }

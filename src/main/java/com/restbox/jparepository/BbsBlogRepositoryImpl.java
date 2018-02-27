@@ -108,4 +108,10 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
         long total = (Long)query.getSingleResult();
         return total;
     }
+
+    @Override
+    public int updateStatus(String status, long blogId) {
+        String sql = "update BbsBlog b set b.status = ?1 where b.id = ?2";
+        return entityManager.createQuery(sql).setParameter(1, status).setParameter(2, blogId).executeUpdate();
+    }
 }

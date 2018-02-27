@@ -6,7 +6,12 @@ import com.restbox.model.BbsBlog;
 import com.restbox.model.Comment;
 import com.restbox.service.api.CreateCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Service
 public class CreateCommentServiceImpl implements CreateCommentService {
 
     @Autowired
@@ -20,6 +25,9 @@ public class CreateCommentServiceImpl implements CreateCommentService {
         Comment comment = new Comment();
         comment.setUsername(username);
         comment.setContent(commentContent);
+        Date date = new Date();
+        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+        comment.setUpdateDate(sqldate);
         comment.setBbsBlog(bbsBlog);
         bbsBlog.getComments().add(comment);
         commentRepository.save(comment);

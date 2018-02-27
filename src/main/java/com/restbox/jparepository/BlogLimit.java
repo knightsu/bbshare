@@ -11,4 +11,5 @@ public interface BlogLimit {
     Collection<BbsBlog> fetchByUsernameFieldLimit(String field, String value, String username, int page);
     long findTotalBlogs();
     long findTotalBlogs(String username);
+    int updateStatus(String status, long blogId);
 }

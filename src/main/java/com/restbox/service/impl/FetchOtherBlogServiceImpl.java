@@ -4,9 +4,11 @@ import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.FetchOtherBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class FetchOtherBlogServiceImpl implements FetchOtherBlogService {
 
     @Autowired
