@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -42,7 +43,8 @@ public class BlogController {
     UpdateStatusService updateStatusService;
 
     @RequestMapping(value = "/{username}/create", method = RequestMethod.POST)
-    public ResponseEntity<Collection<BbsBlog>> createUserBlog(@RequestBody ObjectNode blogData, @PathVariable String  username, @RequestHeader HttpHeaders httpHeaders)
+    public ResponseEntity<Collection<BbsBlog>> createUserBlog(@RequestBody ObjectNode blogData,
+                                                              @PathVariable String  username, @RequestHeader HttpHeaders httpHeaders)
     {
         BbsBlog bbsBlog = constructBlogService.constructBlog(blogData);
         Collection<BbsBlog> result = createBlogService.postBlog(bbsBlog, username);
@@ -53,9 +55,19 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/all/{username}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<BbsBlog>> getUserBlogsAll(@PathVariable String username, @RequestParam(value = "page", required = true) int page, @RequestHeader HttpHeaders httpHeaders)
+    public ResponseEntity<Collection<BbsBlog>> getUserBlogsAll(@PathVariable String username, @RequestParam Map<String, String> map,
+                                                               @RequestHeader HttpHeaders httpHeaders)
     {
-        Collection<BbsBlog> res = fetchUserBlogService.getAllBlogs(username, page);
+        int page = 1;
+        Collection<BbsBlog> res;
+        if(map.size()==1)
+        {
+            page = Integer.parseInt(map.get("page"));
+            res = fetchUserBlogService.getAllBlogs(username, page);
+        }
+        else {
+            res = fetchUserBlogService.getByFieldname(map, username);
+        }
         if(page==1)
         {
             long tot = fetchTotalAmountBlogService.fetchTotalAmountBlogByUsername(username);

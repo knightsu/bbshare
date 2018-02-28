@@ -6,7 +6,9 @@ import com.restbox.service.api.FetchUserBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
+import java.util.Map;
 
 
 @Service
@@ -20,27 +22,15 @@ public class FetchUserBlogServiceImpl implements FetchUserBlogService {
     }
 
     @Override
-    public Collection<BbsBlog> getByCategory(String username, String category, int page) {
-        return bbsBlogRepository.fetchByUsernameFieldLimit("category", category, username, page);
-    }
+    public Collection<BbsBlog> getByFieldname(Map<String, String> map, String username) {
+        //check if map has page keyword
+        int page = 1;
+        if(map.containsKey("page"))
+        {
+            page = Integer.parseInt(map.get("page"));
+            map.remove("page");
+        }
 
-    @Override
-    public Collection<BbsBlog> getByServiceType(String username, String serviceType, int page) {
-        return bbsBlogRepository.fetchByUsernameFieldLimit("service", serviceType, username, page);
-    }
-
-    @Override
-    public Collection<BbsBlog> getByItemType(String username, String itemType, int page) {
-        return bbsBlogRepository.fetchByUsernameFieldLimit("item", itemType, username, page);
-    }
-
-    @Override
-    public Collection<BbsBlog> getByDocType(String username, String docType, int page) {
-        return bbsBlogRepository.fetchByUsernameFieldLimit("doc", docType, username, page);
-    }
-
-    @Override
-    public Collection<BbsBlog> getByStatus(String username, String status, int page) {
-        return bbsBlogRepository.fetchByUsernameFieldLimit("status", status, username, page);
+        return bbsBlogRepository.fetchByUsernameFieldLimit(map, username, page);
     }
 }
