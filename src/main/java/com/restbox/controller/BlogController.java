@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping(value = "/blog")
@@ -31,18 +28,15 @@ public class BlogController {
     DeleteBlogService deleteBlogService;
 
     @Autowired
-    FetchOtherBlogService fetchOtherBlogService;
-
-    @Autowired
     FetchTotalAmountBlogService fetchTotalAmountBlogService;
 
     @Autowired
-    FetchUserBlogService fetchUserBlogService;
+    FetchBlogService fetchBlogService;
 
     @Autowired
-    UpdateStatusService updateStatusService;
+    UpdateBlogService updateBlogService;
 
-    @RequestMapping(value = "/{username}/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create/{username}", method = RequestMethod.POST)
     public ResponseEntity<Collection<BbsBlog>> createUserBlog(@RequestBody ObjectNode blogData,
                                                               @PathVariable String  username, @RequestHeader HttpHeaders httpHeaders)
     {
@@ -54,20 +48,13 @@ public class BlogController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/all/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
     public ResponseEntity<Collection<BbsBlog>> getUserBlogsAll(@PathVariable String username, @RequestParam Map<String, String> map,
                                                                @RequestHeader HttpHeaders httpHeaders)
     {
-        int page = 1;
-        Collection<BbsBlog> res;
-        if(map.size()==1)
-        {
-            page = Integer.parseInt(map.get("page"));
-            res = fetchUserBlogService.getAllBlogs(username, page);
-        }
-        else {
-            res = fetchUserBlogService.getByFieldname(map, username);
-        }
+        int page = Integer.parseInt(map.get("page"));
+        map.remove("page");
+        Collection<BbsBlog> res = fetchBlogService.getWithUsername(map, username, page);
         if(page==1)
         {
             long tot = fetchTotalAmountBlogService.fetchTotalAmountBlogByUsername(username);
@@ -78,6 +65,32 @@ public class BlogController {
         return responseEntity;
     }
 
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResponseEntity<Collection<BbsBlog>> getUserBlogsAll(@RequestParam Map<String, String> map,
+                                                               @RequestHeader HttpHeaders httpHeaders)
+    {
+        int page = Integer.parseInt(map.get("page"));
+        map.remove("page");
+        Collection<BbsBlog> res = fetchBlogService.getWOUsername(map, page);
+        if(page==1)
+        {
+            long tot = fetchTotalAmountBlogService.fetchTotalAmountBlog();
+            httpHeaders.set("Total", Long.toString(tot));
+        }
+        ResponseEntity<Collection<BbsBlog>> responseEntity = new ResponseEntity<Collection<BbsBlog>>(res, httpHeaders, HttpStatus.OK);
+        return responseEntity;
+    }
 
+    @RequestMapping(value = "/update/{username}/{blogId}", method = RequestMethod.PUT)
+    public void updateBlog(@RequestParam Map<String, String> map, @PathVariable String username, @PathVariable long blogId) throws Exception
+    {
+        updateBlogService.updateBlogStatus(map, username, blogId);
+    }
+
+    @RequestMapping(value = "/delete/{blogId}", method = RequestMethod.DELETE)
+    public void deleteBlog(@PathVariable long blogId)
+    {
+        deleteBlogService.deleteBlogbyBlogId(blogId);
+    }
 
 }

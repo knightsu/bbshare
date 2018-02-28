@@ -3,11 +3,13 @@ package com.restbox.service.impl;
 import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.CreateBlogService;
-import com.restbox.service.api.FetchUserBlogService;
+import com.restbox.service.api.FetchBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class CreateBlogServiceImpl implements CreateBlogService {
@@ -16,10 +18,12 @@ public class CreateBlogServiceImpl implements CreateBlogService {
     BbsBlogRepository bbsBlogRepository;
 
     @Autowired
-    FetchUserBlogService fetchUserBlogService;
+    FetchBlogService fetchBlogService;
     @Override
     public Collection<BbsBlog> postBlog(BbsBlog bbsBlog, String username) {
         bbsBlogRepository.save(bbsBlog);
-        return fetchUserBlogService.getAllBlogs(username, 1);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", "1");
+        return fetchBlogService.getWithUsername(map, username);
     }
 }

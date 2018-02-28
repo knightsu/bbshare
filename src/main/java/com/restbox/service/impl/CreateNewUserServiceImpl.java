@@ -16,8 +16,6 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
     @Autowired
     private BbsUserRepository bbsUserRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Override
     public BbsUser createUser(BbsUser bbsUser) {

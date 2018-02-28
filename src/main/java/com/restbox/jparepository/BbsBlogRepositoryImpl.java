@@ -6,11 +6,10 @@ import com.restbox.model.BbsBlog;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class BbsBlogRepositoryImpl implements BlogLimit {
@@ -26,33 +25,23 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
     }
 
     @Override
-    public Collection<BbsBlog> fetchByFieldLimit(String field, String value, int page) {
-        if (field.equals("category")) {
-            String sql = "select b from BbsBlog b where b.category= ?1 order by b.createDate desc";
-            int first = (page - 1) * Constant.BLOGPAGE;
-            Collection<BbsBlog> res = entityManager.createQuery(sql).setParameter(1, value).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
-            return res;
-        } else if (field.equals("service")) {
-            String sql = "select b from BbsBlog b where b.serviceType = ?1 order by b.createDate desc";
-            int first = (page - 1) * Constant.BLOGPAGE;
-            Collection<BbsBlog> res = entityManager.createQuery(sql).setParameter(1, value).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
-            return res;
-        } else if (field.equals("item")) {
-            String sql = "select b from BbsBlog b where b.itemType = ?1 order by b.createDate desc";
-            int first = (page - 1) * Constant.BLOGPAGE;
-            Collection<BbsBlog> res = entityManager.createQuery(sql).setParameter(1, value).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
-            return res;
-        } else if (field.equals("doc")) {
-            String sql = "select b from BbsBlog b where b.docType = ?1 order by b.createDate desc";
-            int first = (page - 1) * Constant.BLOGPAGE;
-            Collection<BbsBlog> res = entityManager.createQuery(sql).setParameter(1, value).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
-            return res;
-        } else if (field.equals("status")) {
-            String sql = "select b from BbsBlog b where b.status = ?1 order by b.createDate desc, b.startDate";
-            int first = (page - 1) * Constant.BLOGPAGE;
-            Collection<BbsBlog> res = entityManager.createQuery(sql).setParameter(1, value).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
-            return res;
-        } else return null;
+    public Collection<BbsBlog> fetchByFieldLimit(Map<String, String> map, int page) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<BbsBlog> query = criteriaBuilder.createQuery(BbsBlog.class);
+        Root<BbsBlog> b = query.from(BbsBlog.class);
+        query.select(b);
+        //service side check map valid
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        map.keySet().forEach((p)->predicates.add(criteriaBuilder.equal(b.get(p), map.get(p))));
+//        for(String s : map.keySet())
+//        {
+//            predicates.add(criteriaBuilder.equal(b.get(s), map.get(s)));
+//        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(criteriaBuilder.desc(b.get("createDate")));
+        int first = (page-1) * Constant.BLOGPAGE;
+        Collection<BbsBlog> res = entityManager.createQuery(query).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
+        return res;
     }
 
     @Override
@@ -71,12 +60,15 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
         Root<BbsBlog> b = query.from(BbsBlog.class);
         query.select(b);
         //service side check map valid
-        for(String s : map.keySet())
-        {
-            ParameterExpression<String> temp = criteriaBuilder.parameter(String.class);
-            query.where(criteriaBuilder.equal(b.get(s), map.get(s)));
-        }
-
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        predicates.add(criteriaBuilder.equal(b.get("username"), username));
+        map.keySet().forEach((p)->predicates.add(criteriaBuilder.equal(b.get(p), map.get(p))));
+//        for(String s : map.keySet())
+//        {
+//            predicates.add(criteriaBuilder.equal(b.get(s), map.get(s)));
+//        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(criteriaBuilder.desc(b.get("createDate")));
         int first = (page-1) * Constant.BLOGPAGE;
         Collection<BbsBlog> res = entityManager.createQuery(query).setFirstResult(first).setMaxResults(Constant.BLOGPAGE).getResultList();
         return res;
@@ -99,8 +91,13 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
     }
 
     @Override
-    public int updateStatus(String status, long blogId) {
-        String sql = "update BbsBlog b set b.status = ?1 where b.id = ?2";
-        return entityManager.createQuery(sql).setParameter(1, status).setParameter(2, blogId).executeUpdate();
+    public int updateByFieldMap(Map<String, String> map, String username, long blogId) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<BbsBlog> update = criteriaBuilder.createCriteriaUpdate(BbsBlog.class);
+        Root<BbsBlog> b = update.from(BbsBlog.class);
+        map.keySet().forEach((p) -> update.set(p, map.get(p)));
+        update.where(criteriaBuilder.equal(b.get("username"), username), criteriaBuilder.equal(b.get("id"), blogId));
+        return entityManager.createQuery(update).executeUpdate();
+
     }
 }
