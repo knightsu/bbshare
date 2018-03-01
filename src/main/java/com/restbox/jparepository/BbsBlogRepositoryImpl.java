@@ -7,10 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.*;
 
 public class BbsBlogRepositoryImpl implements BlogLimit {
     @PersistenceContext
@@ -91,11 +89,15 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
     }
 
     @Override
+    @Transactional
     public int updateByFieldMap(Map<String, String> map, String username, long blogId) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<BbsBlog> update = criteriaBuilder.createCriteriaUpdate(BbsBlog.class);
         Root<BbsBlog> b = update.from(BbsBlog.class);
         map.keySet().forEach((p) -> update.set(p, map.get(p)));
+        Date date = new Date();
+        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+        update.set("createDate", sqldate);
         update.where(criteriaBuilder.equal(b.get("username"), username), criteriaBuilder.equal(b.get("id"), blogId));
         return entityManager.createQuery(update).executeUpdate();
 

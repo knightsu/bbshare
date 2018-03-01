@@ -76,17 +76,9 @@ public class JTOUtil {
         {
             bbsUser.setPhone(userData.get("phone").asText());
         }
-        if(userData.get("coins").isValueNode())
-        {
-            bbsUser.setCoins(userData.get("coins").asLong());
-        }
         if(userData.get("zipcode").isValueNode())
         {
             bbsUser.setZipcode(userData.get("zipcode").asText());
-        }
-        if(userData.get("register").isValueNode())
-        {
-            bbsUser.setRegisterDate(CalUtil.convertStringtoDate(userData.get("register").asText()));
         }
         return bbsUser;
     }

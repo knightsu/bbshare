@@ -22,8 +22,8 @@ public class CreateBlogServiceImpl implements CreateBlogService {
     @Override
     public Collection<BbsBlog> postBlog(BbsBlog bbsBlog, String username) {
         bbsBlogRepository.save(bbsBlog);
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("page", "1");
-        return fetchBlogService.getWithUsername(map, username);
+        Map<String, String> map = new HashMap<>();
+
+        return fetchBlogService.getWithUsername(map, username, 1);
     }
 }

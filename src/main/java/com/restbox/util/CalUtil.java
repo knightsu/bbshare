@@ -22,17 +22,17 @@ public class CalUtil {
         return  null;
     }
 
-    public static Date convertStringtoDate(String s)
-    {
-        java.util.Date date;
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        try {
-            date = format.parse(s);
-            Date sqlDate = new Date(date.getTime());
-            return sqlDate;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public static Date convertStringtoDate(String s)
+//    {
+//        java.util.Date date;
+//        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+//        try {
+//            date = format.parse(s);
+//            Date sqlDate = new Date(date.getTime());
+//            return sqlDate;
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

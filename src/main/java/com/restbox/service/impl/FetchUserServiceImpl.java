@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class FetchUserServiceImpl implements FetchUserService {
     @Autowired
@@ -15,13 +17,19 @@ public class FetchUserServiceImpl implements FetchUserService {
 
     @Override
     public BbsUser getUser(String username) {
-        return bbsUserRepository.findBbsUserByUsername(username);
+        BbsUser bbsUser =  bbsUserRepository.findBbsUserByUsername(username);
+        return addPoint(bbsUser);
     }
 
-    @Override
-    public BbsUser addPoint(BbsUser bbsUser) {
-        bbsUser.setCoins(bbsUser.getCoins()+ Constant.DAILY_CHECKIN);
-        bbsUserRepository.save(bbsUser);
+
+    private BbsUser addPoint(BbsUser bbsUser) {
+        Date date = new Date();
+        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+        if(!bbsUser.getRegisterDate().toString().equals(sqldate.toString())) {
+            bbsUser.setCoins(bbsUser.getCoins() + Constant.DAILY_CHECKIN);
+            bbsUser.setRegisterDate(sqldate);
+            bbsUserRepository.save(bbsUser);
+        }
         return bbsUser;
     }
 }

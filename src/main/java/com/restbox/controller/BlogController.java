@@ -2,6 +2,8 @@ package com.restbox.controller;
 
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.restbox.error.BlogNotFoundException;
+import com.restbox.error.Error;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.*;
 
@@ -55,6 +57,7 @@ public class BlogController {
         int page = Integer.parseInt(map.get("page"));
         map.remove("page");
         Collection<BbsBlog> res = fetchBlogService.getWithUsername(map, username, page);
+        if(res.size()==0) throw new BlogNotFoundException();
         if(page==1)
         {
             long tot = fetchTotalAmountBlogService.fetchTotalAmountBlogByUsername(username);
@@ -72,6 +75,7 @@ public class BlogController {
         int page = Integer.parseInt(map.get("page"));
         map.remove("page");
         Collection<BbsBlog> res = fetchBlogService.getWOUsername(map, page);
+        if(res.size()==0) throw new BlogNotFoundException();
         if(page==1)
         {
             long tot = fetchTotalAmountBlogService.fetchTotalAmountBlog();
@@ -91,6 +95,13 @@ public class BlogController {
     public void deleteBlog(@PathVariable long blogId)
     {
         deleteBlogService.deleteBlogbyBlogId(blogId);
+    }
+
+    @ExceptionHandler(BlogNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Error blogsNotFound(BlogNotFoundException e)
+    {
+        return new Error(4, "there is no blog for your search pattern");
     }
 
 }
