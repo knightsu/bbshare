@@ -1,7 +1,7 @@
 package com.restbox.service.impl;
 
 import com.restbox.error.Error;
-import com.restbox.error.IlligalFetchDateException;
+import com.restbox.error.IllegalFetchDateException;
 import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.FetchBlogService;
@@ -27,7 +27,7 @@ public class FetchBlogServiceImpl implements FetchBlogService {
         {
             return bbsBlogRepository.fetchByFieldLimit(page);
         } else {
-            if(!CheckUtil.checkGet(map)) throw new IlligalFetchDateException();
+            if(!CheckUtil.checkGet(map)) throw new IllegalFetchDateException();
             return bbsBlogRepository.fetchByFieldLimit(map, page);
         }
     }
@@ -38,15 +38,15 @@ public class FetchBlogServiceImpl implements FetchBlogService {
         {
             return bbsBlogRepository.fetchByUsernameFieldLimit(username, page);
         } else {
-            if(!CheckUtil.checkGet(map)) throw new IlligalFetchDateException();
+            if(!CheckUtil.checkGet(map)) throw new IllegalFetchDateException();
             return bbsBlogRepository.fetchByUsernameFieldLimit(map, username, page);
         }
     }
 
 
-    @ExceptionHandler(IlligalFetchDateException.class)
+    @ExceptionHandler(IllegalFetchDateException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Error inputDataWrong(IlligalFetchDateException e)
+    public Error inputDataWrong(IllegalFetchDateException e)
     {
         return new Error(4, "some field and value is not allowed");
     }

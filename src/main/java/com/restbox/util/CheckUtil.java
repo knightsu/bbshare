@@ -2,6 +2,8 @@ package com.restbox.util;
 
 import com.restbox.datatype.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -62,14 +64,57 @@ public class CheckUtil {
             if(!temp.contains(s))
                 return false;
         }
-
-
+        if(map.containsKey("startDate"))
+        {
+            if(!checkTimeString(map.get("startDate"))) return false;
+        }
+        if(map.containsKey("endDate"))
+        {
+            if(!checkTimeString(map.get("endDate"))) return false;
+        }
         return true;
     }
 
     public static boolean checkDateString(String input)
     {
+        if(input.length()!=8) return false;
+        if(!checkDigits(input)) return false;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(1, 31); map.put(2,28); map.put(3,31); map.put(4,30); map.put(5, 31);map.put(6, 30);
+        map.put(7, 31); map.put(8, 31); map.put(9, 30); map.put(10, 31); map.put(11, 30); map.put(12, 31);
+        int year = Integer.parseInt(input.substring(4));
+        int month = Integer.parseInt(input.substring(4, 6));
+        int day = Integer.parseInt(input.substring(6, 8));
+        if (month < 1 || month > 12) return false;
+        if(month!=2 && day>map.get(month)) return false;
+        if(month==2)
+        {
+            if(year%4==0 || (year%100==0 && year%400==0) && day>map.get(2)+1) return false;
+            else if(year%4!=0 || (year%100==0 && year%400!=0) && day>map.get(2)) return false;
+        }
         return true;
     }
 
+    public static boolean checkTimeString(String input)
+    {
+        if(input.length()!=14) return false;
+        if(!checkDigits(input)) return false;
+        if(!checkDateString(input)) return false;
+        int hour = Integer.parseInt(input.substring(8, 10));
+        int minute = Integer.parseInt(input.substring(10, 12));
+        int seconde = Integer.parseInt(input.substring(12, 14));
+        if(hour>23) return false;
+        if(minute>59) return false;
+        if(seconde>59) return false;
+        return true;
+    }
+
+    private static boolean checkDigits(String input)
+    {
+        for(char c : input.toCharArray())
+        {
+            if(!Character.isDigit(c)) return false;
+        }
+        return true;
+    }
 }
