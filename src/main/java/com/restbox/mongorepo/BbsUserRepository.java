@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface BbsUserRepository extends MongoRepository<BbsUser, String>, UserChange{
-    BbsUser findBbsUserByUsername(String username);
+    List<BbsUser> findBbsUserByUsername(String username);
 }
