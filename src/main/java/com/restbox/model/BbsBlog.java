@@ -3,6 +3,7 @@ package com.restbox.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.util.*;
 import java.sql.Date;
 
@@ -22,8 +23,8 @@ public class BbsBlog {
     @Column(name = "status_curr") private String status;
     private int charge;
     @Column(name = "create_date") private java.sql.Date createDate;
-    @Column(name = "start_date") private java.sql.Date startDate;
-    @Column(name = "end_date") private java.sql.Date endDate;
+    @Column(name = "start_date") private java.sql.Timestamp startDate;
+    @Column(name = "end_date") private java.sql.Timestamp endDate;
     private String zipcode;
 
 
@@ -33,20 +34,6 @@ public class BbsBlog {
 
     public BbsBlog() {}
 
-    public BbsBlog(String username, String category, String title, String serviceType, String itemType, String description, String docType, String status, int charge, Date createDate, Date startDate, Date endDate) {
-        this.username = username;
-        this.category = category;
-        this.title = title;
-        this.serviceType = serviceType;
-        this.itemType = itemType;
-        this.description = description;
-        this.docType = docType;
-        this.status = status;
-        this.charge = charge;
-        this.createDate = createDate;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
 
     public String getZipcode() {
         return zipcode;
@@ -152,19 +139,19 @@ public class BbsBlog {
         this.createDate = createDate;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 }

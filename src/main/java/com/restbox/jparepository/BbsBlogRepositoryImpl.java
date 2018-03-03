@@ -2,12 +2,14 @@ package com.restbox.jparepository;
 
 import com.restbox.Constant.Constant;
 import com.restbox.model.BbsBlog;
+import com.restbox.util.CalUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class BbsBlogRepositoryImpl implements BlogLimit {
@@ -94,6 +96,18 @@ public class BbsBlogRepositoryImpl implements BlogLimit {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<BbsBlog> update = criteriaBuilder.createCriteriaUpdate(BbsBlog.class);
         Root<BbsBlog> b = update.from(BbsBlog.class);
+        if(map.containsKey("startDate"))
+        {
+            Timestamp sqltime = CalUtil.convertStringtoTime(map.get("startDate"));
+            update.set("startDate", sqltime);
+            map.remove("startDate");
+        }
+        if(map.containsKey("endDate"))
+        {
+            Timestamp sqltime = CalUtil.convertStringtoTime(map.get("endDate"));
+            update.set("endDate", sqltime);
+            map.remove("endDate");
+        }
         map.keySet().forEach((p) -> update.set(p, map.get(p)));
         Date date = new Date();
         java.sql.Date sqldate = new java.sql.Date(date.getTime());

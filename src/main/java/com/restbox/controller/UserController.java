@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/user/")
-public class UserConstroller {
+public class UserController {
 
     @Autowired
     ConstructUserService constructUserService;

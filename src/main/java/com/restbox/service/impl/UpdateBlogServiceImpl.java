@@ -9,6 +9,7 @@ import com.restbox.jparepository.BbsBlogRepository;
 import com.restbox.model.BbsBlog;
 import com.restbox.service.api.UpdateBlogService;
 import com.restbox.util.CheckUtil;
+import com.restbox.util.DateFormatConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class UpdateBlogServiceImpl implements UpdateBlogService {
     BbsBlogRepository bbsBlogRepository;
 
     @Override
-    public void updateBlogStatus(Map<String, String> map, String username, long id) throws Exception{
+    public void updateBlogStatus(Map<String, String> map, String username, long id) {
         if(!CheckUtil.checkUpdate(map)) throw new IllegalUpdateFieldException();
         BbsBlog result = bbsBlogRepository.findBbsBlogByIdAndUsername(id, username);
         if(result==null) throw new BlogNotFoundException();

@@ -2,20 +2,22 @@ package com.restbox.util;
 
 import org.slf4j.Logger;
 
-import java.sql.Date;
+
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CalUtil {
-    public static Date convertStringtoTime(String s)
+    public static Timestamp convertStringtoTime(String s)
     {
-        java.util.Date date;
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd hhmmss");
+        Date date;
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         try {
             date = format.parse(s);
-            Date sqldate = new Date(date.getTime());
-            return sqldate;
+            Timestamp sqltime = new Timestamp(date.getTime());
+            return sqltime;
         } catch (ParseException e) {
             e.printStackTrace();
         }

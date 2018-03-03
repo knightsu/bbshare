@@ -50,11 +50,11 @@ public class JTOUtil {
 //        if (blogData.get("create").isValueNode()) {
 //            bbsBlog.setCreateDate(CalUtil.convertStringtoTime(blogData.get("create").asText()));
 //        }
-        if (blogData.get("start").isValueNode()) {
+        if (blogData.get("startDate").isValueNode()) {
             if(CheckUtil.checkTimeString(blogData.get("start").asText())) throw new InputFormatIllegalException();
             bbsBlog.setStartDate(CalUtil.convertStringtoTime(blogData.get("start").asText()));
         }
-        if (blogData.get("end").isValueNode()) {
+        if (blogData.get("endDate").isValueNode()) {
             if(CheckUtil.checkTimeString(blogData.get("end").asText())) throw new InputFormatIllegalException();
             bbsBlog.setEndDate(CalUtil.convertStringtoTime(blogData.get("end").asText()));
         }

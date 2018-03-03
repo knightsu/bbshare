@@ -7,5 +7,5 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface UpdateBlogService {
-    void updateBlogStatus(Map<String, String> map, String username, long id) throws Exception;
+    void updateBlogStatus(Map<String, String> map, String username, long id);
 }
