@@ -35,4 +35,16 @@ public class CommentController {
         createCommentService.postComment(content, blogId, username);
         return fetchBlogCommentService.getBlogDetails(blogId, 1);
     }
+
+    @RequestMapping(value = "/delete/{commentId}", method = RequestMethod.DELETE)
+    public void deleteComment(@PathVariable long commentId)
+    {
+        deleteCommentService.deleteCommentByCommentId(commentId);
+    }
+
+    @RequestMapping(value = "/list/{blogId}", method = RequestMethod.GET)
+    public Collection<Comment> fetchComment(@PathVariable long blogId, @RequestParam int page)
+    {
+        return fetchBlogCommentService.getBlogDetails(blogId, page);
+    }
 }

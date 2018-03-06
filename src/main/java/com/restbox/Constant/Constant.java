@@ -11,6 +11,6 @@ public class Constant {
     public static final int BLOGPAGE = 20;
 
     public static final int COMMENT = 5;
-    public static final int DAILY_CHECKIN = 2;
+    public static final long DAILY_CHECKIN = 2L;
 
 }

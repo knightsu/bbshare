@@ -6,6 +6,7 @@ import com.restbox.error.UsernameNotCorrectException;
 import com.restbox.model.BbsUser;
 import com.restbox.mongorepo.BbsUserRepository;
 import com.restbox.service.api.FetchUserService;
+import com.restbox.util.CalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
@@ -23,24 +24,24 @@ public class FetchUserServiceImpl implements FetchUserService {
 
     @Override
     public BbsUser getUser(String username) {
-        List<BbsUser> bbsUsers = bbsUserRepository.findBbsUserByUsername(username);
-        if(bbsUsers.size()!=1) throw new UsernameNotCorrectException();
-        return addPoint(bbsUsers.get(0));
+        BbsUser bbsUser = bbsUserRepository.findBbsUserByUsername(username);
+        if(bbsUser==null) throw new UsernameNotCorrectException();
+        return addPoint(bbsUser);
     }
 
     @Override
     public long getCoins(String username) {
-        List<BbsUser> bbsUsers = bbsUserRepository.findBbsUserByUsername(username);
-        if(bbsUsers.size()!=1) throw new UsernameNotCorrectException();
-        return bbsUsers.get(0).getCoins();
+        BbsUser bbsUser = bbsUserRepository.findBbsUserByUsername(username);
+        if(bbsUser==null) throw new UsernameNotCorrectException();
+        return bbsUser.getCoins();
     }
 
     private BbsUser addPoint(BbsUser bbsUser) {
-        Date date = new Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        if(!bbsUser.getRegisterDate().toString().equals(sqldate.toString())) {
-            bbsUser.setCoins(bbsUser.getCoins() + Constant.DAILY_CHECKIN);
-            bbsUser.setRegisterDate(sqldate);
+        if(!CalUtil.compareTwoDate(bbsUser.getLastLogin()))
+        {
+            Date date = new Date();
+            bbsUser.setLastLogin(date);
+            bbsUser.setCoins(bbsUser.getCoins()+Constant.DAILY_CHECKIN);
             bbsUserRepository.save(bbsUser);
         }
         return bbsUser;

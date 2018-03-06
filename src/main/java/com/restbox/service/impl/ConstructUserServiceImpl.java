@@ -16,7 +16,7 @@ public class ConstructUserServiceImpl implements ConstructUserService {
         BbsUser bbsUser =  JTOUtil.converttoUser(userData);
         bbsUser.setCoins(450L);
         Date date = new Date();
-        bbsUser.setRegisterDate(new java.sql.Date(date.getTime()));
+        bbsUser.setRegisterDate(date);
         return bbsUser;
     }
 }

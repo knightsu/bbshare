@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.*;
 import java.util.Date;
 
-@Document
+@Document(collection = "bbsuser")
 public class BbsUser {
 
     @Id private String  userId;
@@ -17,6 +17,8 @@ public class BbsUser {
     private long coins;
     private String zipcode;
     private Date registerDate;
+    private Date lastLogin;
+
 
     public Date getRegisterDate() {
         return registerDate;
@@ -88,6 +90,14 @@ public class BbsUser {
 
     public void setCoins(long coins) {
         this.coins = coins;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class BbsUserRepositoryImpl implements UserChange{
         Query query = Query.query(where);
         Update update = new Update();
         map.keySet().forEach((p) -> update.set(p, map.get(p)));
-        mongoOperations.updateMulti(query, update, "blog");
+        mongoOperations.updateMulti(query, update, "BbsUser");
     }
 
     @Override
@@ -27,6 +27,6 @@ public class BbsUserRepositoryImpl implements UserChange{
         Criteria where = Criteria.where("username").is(username);
         Query query = Query.query(where);
         Update update = new Update();
-        mongoOperations.updateMulti(query, update.set("coins", coin), "blog");
+        mongoOperations.updateMulti(query, update.set("coins", coin), "BbsUser");
     }
 }

@@ -32,9 +32,9 @@ public class UserUpdateServiceImpl implements UserUpdateService {
 
     @Override
     public void updateCoins(String username, long coins) {
-        List<BbsUser> users = bbsUserRepository.findBbsUserByUsername(username);
-        if(users.size()!=1) throw new UsernameNotCorrectException();
-        long coin = users.get(0).getCoins();
+        BbsUser user = bbsUserRepository.findBbsUserByUsername(username);
+        if(user==null) throw new UsernameNotCorrectException();
+        long coin = user.getCoins();
         coin = coin+coins;
         if(coin<0) throw new NotEnoughBalanceException();
         bbsUserRepository.updateUserCoins(username, coin);
